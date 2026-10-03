@@ -12,89 +12,68 @@ class Program
 {
     static void Main()
     {
-        Queue<StudentRequest> requestQueue =
+        Queue<StudentRequest> requests =
             new Queue<StudentRequest>();
 
         int choice;
 
         do
         {
-            Console.WriteLine("========================================");
-            Console.WriteLine("          STUDENT REQUEST QUEUE");
-            Console.WriteLine("========================================");
             Console.WriteLine("1. Add Request");
-            Console.WriteLine("2. View Pending Requests");
+            Console.WriteLine("2. View Requests");
             Console.WriteLine("3. Process Request");
             Console.WriteLine("4. Exit");
-            Console.Write("Enter choice: ");
-            choice = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Choice: ");
+            choice = int.Parse(Console.ReadLine());
 
             if (choice == 1)
             {
-                StudentRequest request = new StudentRequest();
+                StudentRequest r = new StudentRequest();
 
-                Console.Write("Enter Student Number: ");
-                request.StudentNumber = Console.ReadLine();
+                Console.Write("Student Number: ");
+                r.StudentNumber = Console.ReadLine();
 
-                Console.Write("Enter Student Name: ");
-                request.StudentName = Console.ReadLine();
+                Console.Write("Student Name: ");
+                r.StudentName = Console.ReadLine();
 
-                Console.Write("Enter Request Type: ");
-                request.RequestType = Console.ReadLine();
+                Console.Write("Request Type: ");
+                r.RequestType = Console.ReadLine();
 
-                requestQueue.Enqueue(request);
+                requests.Enqueue(r);
 
-                Console.WriteLine("Request added successfully!");
+                Console.WriteLine("Added.");
             }
+
             else if (choice == 2)
             {
-                if (requestQueue.Count == 0)
+                if (requests.Count == 0)
                 {
-                    Console.WriteLine("No pending requests.");
+                    Console.WriteLine("No requests.");
                 }
                 else
                 {
-                    Console.WriteLine("\nREQUEST QUEUE");
-
-                    int number = 1;
-
-                    foreach (StudentRequest request in requestQueue)
-                    {
-                        Console.WriteLine(number + ". " +
-                            request.StudentName + " - " +
-                            request.RequestType);
-                        number++;
-                    }
+                    foreach (StudentRequest r in requests)
+                        Console.WriteLine(r.StudentName + " - " + r.RequestType);
                 }
             }
+
             else if (choice == 3)
             {
-                if (requestQueue.Count == 0)
+                if (requests.Count == 0)
                 {
-                    Console.WriteLine("No pending requests.");
+                    Console.WriteLine("No requests.");
                 }
                 else
                 {
-                    StudentRequest request = requestQueue.Dequeue();
+                    StudentRequest r = requests.Dequeue();
 
-                    Console.WriteLine("Processing Request: " +
-                        request.StudentName + " - " +
-                        request.RequestType);
-
-                    Console.WriteLine("Request processed successfully!");
+                    Console.WriteLine("Processing: " +
+                        r.StudentName + " - " + r.RequestType);
                 }
             }
-            else if (choice == 4)
-            {
-                Console.WriteLine("Program exited.");
-            }
-            else
-            {
-                Console.WriteLine("Invalid choice.");
-            }
 
-            Console.WriteLine();
-        }
-        while (choice != 4);
+        } while (choice != 4);
+
+        Console.WriteLine("Program exited.");
     }
 }
